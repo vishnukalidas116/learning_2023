@@ -1,23 +1,27 @@
 #include <stdio.h>
- 
-int main()
-{
-    int a[] = {0x1, 0xF4, 0x10001};
-    int n = sizeof(a) / sizeof(a[0]);
+
+int count_bits(int array[], int size) {
+  int total_bits = 0;
+  for (int i = 0; i < size; i++) {
+    int num = array[i];
     int count = 0;
-    for (int i = 0; i < n; i++) {
-        count += countSetBits(a[i]);
-    }
-    printf("Total number of set bits is %d\n", count);
-    return 0;
-}
- 
-int countSetBits(int n)
-{
-    int count = 0;
-    while (n) {
+    while (num != 0) {
+      if (num & 1) {
         count++;
-        n = n & (n - 1);
+      }
+      num >>= 1;
     }
-    return count;
+    total_bits += count;
+  }
+  return total_bits;
+}
+
+int main() {
+  int a[] = {0x1, 0xF4, 0x10001};
+  int size = sizeof(a) / sizeof(a[0]);
+
+  int result = count_bits(a, size);
+  printf("Total bits: %d\n", result);
+
+  return 0;
 }

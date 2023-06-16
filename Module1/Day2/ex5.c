@@ -1,14 +1,21 @@
 #include <stdio.h>
-int main()
-{
-    int a[3] = {0x1, 0xF4, 0x10001};
-    int i, count = 0;
-    for (i = 0; i < 3; i++) {
-        while (a[i] != 0) {
-            count++;
-            a[i] = a[i] & (a[i] - 1);
-        }
+
+int count_bits(int *array, int size) {
+  int total_bits = 0;
+  for (int i = 0; i < size; i++) {
+    for (int j = 0; j < 32; j++) {
+      if ((array[i] & (1 << j)) != 0) {
+        total_bits++;
+      }
     }
-    printf("The total number of set bits is: %d", count);
-    return 0;
+  }
+  return total_bits;
+}
+
+int main() {
+  int a[] = {0x1, 0xF4, 0x10001};
+  int size = sizeof(a) / sizeof(a[0]);
+  int total_bits = count_bits(a, size);
+  printf("The total number of bits set is %d\n", total_bits);
+  return 0;
 }
